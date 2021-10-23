@@ -1,7 +1,9 @@
 package dev.juliofonseca.springboot.mongodb.resource;
 
 import dev.juliofonseca.springboot.mongodb.entity.User;
+import dev.juliofonseca.springboot.mongodb.service.UserService;
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +17,13 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
+
+    @Autowired
+    private UserService userService;
+
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
-        User julio = new User("123", "Julio Cesar", "juliocsrmf@gmail.com");
-        User alex = new User("1235", "Alex Brown", "alexbrown@gmail.com");
-
-        List<User> users = new ArrayList<>(Arrays.asList(julio, alex));
+        List<User> users = userService.findAll();
         return ResponseEntity.ok().body(users);
     }
 }
