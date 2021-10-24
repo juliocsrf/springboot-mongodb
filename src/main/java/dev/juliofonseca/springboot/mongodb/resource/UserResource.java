@@ -1,6 +1,7 @@
 package dev.juliofonseca.springboot.mongodb.resource;
 
 import dev.juliofonseca.springboot.mongodb.dto.UserDTO;
+import dev.juliofonseca.springboot.mongodb.entity.Post;
 import dev.juliofonseca.springboot.mongodb.entity.User;
 import dev.juliofonseca.springboot.mongodb.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,12 @@ public class UserResource {
         userDTO.setId(id);
         userService.update(UserDTO.convertToEntity(userDTO));
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> getPosts(@PathVariable String id) {
+        User user = userService.findById(id);
+        return ResponseEntity.ok().body(user.getPosts());
     }
 
 }
