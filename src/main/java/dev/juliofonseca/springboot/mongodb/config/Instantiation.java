@@ -1,5 +1,6 @@
 package dev.juliofonseca.springboot.mongodb.config;
 
+import dev.juliofonseca.springboot.mongodb.dto.AuthorDTO;
 import dev.juliofonseca.springboot.mongodb.entity.Post;
 import dev.juliofonseca.springboot.mongodb.entity.User;
 import dev.juliofonseca.springboot.mongodb.repository.PostRepository;
@@ -33,11 +34,11 @@ public class Instantiation implements CommandLineRunner {
         User maria = new User(null, "Maria Brown", "maria@gmail.com");
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
-
-        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Vava", "Chama pro vavazin", maria);
-        Post post2 = new Post(null, sdf.parse("23/03/2018"), "Salve", "Salve garai", maria);
-
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
+        AuthorDTO mariaDTO = new AuthorDTO(maria);
+        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Vava", "Chama pro vavazin", mariaDTO);
+        Post post2 = new Post(null, sdf.parse("23/03/2018"), "Salve", "Salve garai", mariaDTO);
         postRepository.saveAll(Arrays.asList(post1, post2));
 
     }
