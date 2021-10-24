@@ -32,4 +32,9 @@ public class UserServiceImpl implements UserService {
     public User insert(User user) {
         return userRepository.insert(user);
     }
+
+    public void deleteById(String id) {
+        User user = this.findById(id);
+        userRepository.delete(user);
+    }
 }

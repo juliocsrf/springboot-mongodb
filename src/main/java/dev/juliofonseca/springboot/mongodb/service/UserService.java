@@ -8,4 +8,5 @@ public interface UserService {
     List<User> findAll();
     User findById(String id);
     User insert(User user);
+    void deleteById(String id);
 }
