@@ -7,6 +7,7 @@ import dev.juliofonseca.springboot.mongodb.service.exception.ObjectNotFoundExcep
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,5 +25,10 @@ public class PostServiceImpl implements PostService {
         }
 
         return post.get();
+    }
+
+    @Override
+    public List<Post> findByTitle(String text) {
+        return postRepository.findByTitleContainingIgnoreCase(text);
     }
 }
