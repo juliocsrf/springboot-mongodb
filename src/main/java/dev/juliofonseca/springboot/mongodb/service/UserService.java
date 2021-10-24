@@ -9,4 +9,5 @@ public interface UserService {
     User findById(String id);
     User insert(User user);
     void deleteById(String id);
+    User update(User user);
 }
