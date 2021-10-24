@@ -5,5 +5,6 @@ import dev.juliofonseca.springboot.mongodb.entity.User;
 import java.util.List;
 
 public interface UserService {
-    public List<User> findAll();
+    List<User> findAll();
+    User findById(String id);
 }

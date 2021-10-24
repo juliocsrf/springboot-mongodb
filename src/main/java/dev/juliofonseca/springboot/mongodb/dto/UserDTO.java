@@ -33,4 +33,8 @@ public class UserDTO implements Serializable {
     public String getEmail() {
         return email;
     }
+
+    public static User convertToEntity(UserDTO userDTO){
+        return new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail());
+    }
 }
