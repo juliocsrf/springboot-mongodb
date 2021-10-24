@@ -1,6 +1,7 @@
 package dev.juliofonseca.springboot.mongodb.config;
 
 import dev.juliofonseca.springboot.mongodb.dto.AuthorDTO;
+import dev.juliofonseca.springboot.mongodb.dto.CommentDTO;
 import dev.juliofonseca.springboot.mongodb.entity.Post;
 import dev.juliofonseca.springboot.mongodb.entity.User;
 import dev.juliofonseca.springboot.mongodb.repository.PostRepository;
@@ -39,6 +40,14 @@ public class Instantiation implements CommandLineRunner {
         AuthorDTO mariaDTO = new AuthorDTO(maria);
         Post post1 = new Post(null, sdf.parse("21/03/2018"), "Vava", "Chama pro vavazin", mariaDTO);
         Post post2 = new Post(null, sdf.parse("23/03/2018"), "Salve", "Salve garai", mariaDTO);
+
+        CommentDTO comment1 = new CommentDTO("Bora!", sdf.parse("21/03/2018"), new AuthorDTO(alex));
+        CommentDTO comment2 = new CommentDTO("Só chamar!", sdf.parse("22/03/2018"), new AuthorDTO(bob));
+        CommentDTO comment3 = new CommentDTO("Salve meu mano!", sdf.parse("23/03/2018"), new AuthorDTO(alex));
+
+        post1.getComments().addAll(Arrays.asList(comment1, comment2));
+        post2.getComments().add(comment3);
+
         postRepository.saveAll(Arrays.asList(post1, post2));
 
         maria.getPosts().addAll(Arrays.asList(post1, post2));
