@@ -6,7 +6,9 @@ import dev.juliofonseca.springboot.mongodb.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,17 +19,25 @@ public class UserResource {
     @Autowired
     private UserService userService;
 
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> findAll() {
         List<User> users = userService.findAll();
         List<UserDTO> userDTOList = users.stream().map(UserDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(userDTOList);
     }
 
-    @GetMapping(value = "/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> findById(@PathVariable String id) {
         User user = userService.findById(id);
         UserDTO userDTO = new UserDTO(user);
         return ResponseEntity.ok().body(userDTO);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> insert(@RequestBody UserDTO userDTO) {
+        User user = UserDTO.convertToEntity(userDTO);
+        user = userService.insert(user);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }

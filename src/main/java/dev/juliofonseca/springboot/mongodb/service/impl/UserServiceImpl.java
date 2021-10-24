@@ -28,4 +28,8 @@ public class UserServiceImpl implements UserService {
 
         return user.get();
     }
+
+    public User insert(User user) {
+        return userRepository.insert(user);
+    }
 }
